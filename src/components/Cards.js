@@ -2,19 +2,31 @@
 import React, { useState } from "react";
 import Card from "./Card";
 
-function Cards({courses}){
+function Cards(props){
 
+    const courses=props.courses;
+    const category=props.category; 
     const allCourses=[];
     const [likedCourses,setLikedCourses]=useState([]);
 
     //this returns the single array of all courses received from the api response
     const getCourses=()=>{
-        Object.values(courses).forEach((courseCategory)=>{
-            courseCategory.forEach((course)=>{
-                      allCourses.push(course);
+
+        if(category==="All"){
+            Object.values(courses).forEach((courseCategory)=>{
+                courseCategory.forEach((course)=>{
+                          allCourses.push(course);
+                })
             })
-        })
-        return allCourses;
+            return allCourses;
+
+        }
+        else{   //return specific category
+
+            return courses[category];
+
+        }
+      
     }
 
     return(
