@@ -9,36 +9,47 @@ import Spinner from "./components/Spinner";
 const App = () => {
 
 
-  const [courses,setCourses]=useState("");
+  const [courses,setCourses]=useState(null);
   const [loading,setLoading]=useState(true);
 
   useEffect(()=>{
     const fetchData=async()=>{
-      setLoading(true);
+      setLoading(true);   //Before fetching data set loading=true
         try {
-            const res=await fetch(apiUrl);
-            const output=await res.json();
-            setCourses(output.data);
+            const res=await fetch(apiUrl);  //fetch data from api
+            const output=await res.json();  //convert data to json format
+            setCourses(output.data);   //set courses =fetched data
             console.log(courses);
             
         } catch (error) {
             toast.error("Something went wrong")
         }
-        setLoading(false);
+        setLoading(false);    //After fetching data set loading=false
     }
     fetchData();
 },[])
 
 
-  return <div>
-     <Navbar/>
-     <Filter filterData={filterData}/>
+  return (
+  <div className="min-h-screen flex flex-col">
+      <div>
+          <Navbar/>
+      </div>
+      <div className="bg-bgDark2">
+      <div>
+       <Filter filterData={filterData}/>
+      </div>
+     
+     <div className="w-11/12 max-w-[1200px] mx-auto flex flex-wrap justify-center items-center min-h-[50vh]">
      {
-      loading?(<Spinner/>):(<Cards courses={courses}/>)
+      loading?(<Spinner/>):(<Cards courses={courses}/>)   //If loading value is true then render spinner else render Cards
      }
+     </div>
+      </div>
+     
      
 
-  </div>;
+  </div>);
 };
 
 export default App;

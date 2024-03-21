@@ -1,10 +1,11 @@
 
-import React from "react";
+import React, { useState } from "react";
 import Card from "./Card";
 
 function Cards({courses}){
 
     const allCourses=[];
+    const [likedCourses,setLikedCourses]=useState([]);
 
     //this returns the single array of all courses received from the api response
     const getCourses=()=>{
@@ -17,10 +18,10 @@ function Cards({courses}){
     }
 
     return(
-        <div>
+        <div className="flex flex-wrap justify-center gap-4 mb-4">
            {
             getCourses().map((course)=>{
-                return <Card key={course.id} course={course}/>
+                return <Card key={course.id} course={course}/>    //return a single card for each element of array , i.e each course
             })
            }
         </div>
