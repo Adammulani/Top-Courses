@@ -1,8 +1,10 @@
 import React, { useEffect } from "react";
 import { apiUrl } from "../data";
-function Filter({filterData}){
+function Filter(props){
 
-    
+    let filterData=props.filterData;
+    let category=props.category;
+    let setCategory=props.setCategory;
 
     return(
         <div className="w-11/12 flex flex-wrap max-w-max space-x-4 gap-y-4 mx-auto py-4 justify-center">

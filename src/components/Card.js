@@ -1,10 +1,32 @@
 import React from "react";
-import {FcLike} from "react-icons/fc"
+import {FcLike,FcLikePlaceholder} from "react-icons/fc"
+import { toast } from "react-toastify";
 
-function Card({course}){
+function Card(props){
+
+    const course=props.course;
+    const likedCourses=props.likedCourses;
+    const setLikedCourses=props.setLikedCourses;
   
      function clickHandler(){
-        
+
+      if(likedCourses.includes(course.id)){   
+            // that course is already liked, so we need to remove it from likedCourses
+            setLikedCourses((prev)=>prev.filter((cid)=>(cid!==course.id)));  //cid is course id of previous course, basically in setLiked courses we inser id's
+            toast.warning("like removed");
+      }
+      else{  //this course is not already liked, so we need to add this to likedCourses
+
+        if(likedCourses.length===0){  //if it is empty
+            setLikedCourses([course.id])
+        }
+        else{
+            setLikedCourses((prev)=>[...prev,course.id]);
+        }
+        toast.success("Liked Successfully !");
+
+      }
+
      }
 
   return(
@@ -13,14 +35,19 @@ function Card({course}){
             <img src={course.image.url}></img>
             <div className="w-[40px] h-[40px] bg-white rounded-full absolute right-2 bottom-3 grid place-items-center">
             <button onClick={clickHandler}>
-                <FcLike fontSize="1.75rem"/>
+                {
+                likedCourses.includes(course.id)?<FcLike fontSize="1.75rem"/> :<FcLikePlaceholder fontSize="1.75rem"/>}
             </button>
         </div>
         </div>
        
         <div>
             <p className="text-white font-semibold text-lg leading-6 px-3 py-2">{course.title}</p>
-            <p className="mt-2 text-white px-3">{course.description}</p>
+            <p className="mt-2 text-white px-3 pb-3">
+                {
+                course.description.length>100 ? course.description.substring(0,100)+"...":course.description
+                }
+                </p>
         </div>
     </div>
   )

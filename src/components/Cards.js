@@ -21,7 +21,7 @@ function Cards({courses}){
         <div className="flex flex-wrap justify-center gap-4 mb-4">
            {
             getCourses().map((course)=>{
-                return <Card key={course.id} course={course}/>    //return a single card for each element of array , i.e each course
+                return <Card key={course.id} course={course} likedCourses={likedCourses} setLikedCourses={setLikedCourses}/>    //return a single card for each element of array , i.e each course
             })
            }
         </div>
